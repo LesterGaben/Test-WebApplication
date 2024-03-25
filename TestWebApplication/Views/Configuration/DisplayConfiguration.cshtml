@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Html
+@model TestWebApplication.Models.ConfigurationNode
+
+@{
+    ViewData["Title"] = "View Configuration";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@RenderTree(Model)
+
+@functions {
+    IHtmlContent RenderTree(TestWebApplication.Models.ConfigurationNode node, int level = 0) {
+        var builder = new HtmlContentBuilder();
+        var indent = new String(' ', level * 2);
+
+        if (level == 0) {
+            builder.AppendHtml("<ul>");
+        }
+        else {
+            builder.AppendHtml($"{indent}<ul>");
+        }
+
+        builder.AppendHtml($"{indent}<li>");
+        builder.AppendHtml($"Key: {node.Key}");
+        if (!string.IsNullOrEmpty(node.Value)) {
+            builder.AppendHtml($", Value: {node.Value}");
+        }
+        builder.AppendHtml("</li>");
+
+        if (node.Children != null && node.Children.Any()) {
+            foreach (var child in node.Children) {
+                builder.AppendHtml(RenderTree(child, level + 1));
+            }
+        }
+
+        builder.AppendHtml($"{indent}</ul>");
+
+        return builder;
+    }
+}

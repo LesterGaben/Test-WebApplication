@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Upload JSON or TXT Configuration";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="UploadConfiguration" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="configFile">Select JSON or TXT Configuration File:</label>
+        <input style="margin-top: 10px;" type="file" class="form-control" name="configFile" required />
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Upload</button>
+</form>
